@@ -7,7 +7,6 @@ estado varchar(30),
 telefone_residencial varchar(20),
 primary key (id_endereco));
 
-
 create table musico(
 numero_bi varchar(11) not null,
 nome varchar(255) not null,
@@ -15,6 +14,11 @@ telefone varchar(20),
 id_endereco int references endereco(id_endereco),  
 primary key (numero_bi),
 foreign key (id_endereco) references endereco (id_endereco));
+
+create table gravadora(
+id_gravadora int not null,
+nome varchar(155),
+primary key (id_gravadora));
 
 create table instrumentos(
 id_instrumento int not null,
@@ -24,21 +28,9 @@ primary key (id_instrumento));
 create table musico_instrumento(
 numero_bi varchar(11) not null,
 id_instrumento int not null,
-primary key (id_instrumento),
+primary key (numero_bi, id_instrumento),
 foreign key (numero_bi) references musico(numero_bi),
 foreign key (id_instrumento) references instrumentos (id_instrumento));
-
-create table gravadora(
-id_gravadora int not null,
-nome varchar(155),
-primary key (id_gravadora));
-
-create table artista(
-id_gravadora int not null,
-id_artista int not null,
-nome varchar(255) not null,
-primary key (id_artista),
-foreign key (id_gravadora) references gravadora (id_gravadora));
 
 create table disco(
 id_disco int not null,
@@ -62,23 +54,25 @@ titulo varchar(255) not null,
 autor varchar(255) not null, 
 id_disco int not null,
 id_genero int not null,
-id_artista int not null,
+numero_bi varchar(11) not null,    
 primary key (id_musica),
 foreign key (id_genero) references genero (id_genero),
-foreign key (id_artista) references artista (id_artista),
-foreign key (id_disco) references disco (id_disco));
+foreign key (id_disco) references disco (id_disco),
+foreign key (numero_bi) references musico (numero_bi));
 
 create table participacao(
 id_musica int not null,
 numero_bi varchar(11) not null,
 funcao varchar(155) not null,
-primary key (id_musica, numero_bi));
+primary key (id_musica, numero_bi),
+foreign key (id_musica) references musica(id_musica),
+foreign key (numero_bi) references musico(numero_bi));
 
 create table plano(
 id_plano int not null,
 nome varchar(155) not null,
 limite_downloads int not null,
-valor decimal (8,5),
+valor decimal (8,2),
 primary key (id_plano));
 
 create table cliente(
