@@ -72,16 +72,6 @@ create table genero(
     primary key (id_genero)
 );
 
--- Aqui temos vários relacionamentos:
---  - MUSICA -> DISCO (id_disco NOT NULL):
---      * “A música é parte de um disco”
---      * Conceitualmente: RELAÇÃO TODO–PARTE
---      * Pode ser modelado como AGREGAÇÃO FORTE ou COMPOSIÇÃO
---        (música depende de um disco para existir no modelo: FK obrigatória).
---  - MUSICA -> GENERO:
---      * Associação 1:N (um gênero para várias músicas, gênero independente).
---  - MUSICA -> MUSICO (numero_bi autor):
---      * Associação (um músico é autor, mas existe independentemente da música).
 create table musica(
     id_musica int not null,
     titulo varchar(255) not null,
